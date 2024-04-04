@@ -1,0 +1,71 @@
+@model Project_Group3.Models.ModelsView
+@{
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/5.3.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="~/css/style.css" />
+<link rel="stylesheet" href="~/fonts/boxicons.css" />
+
+<div class="container-fluid addvertising-course">
+    <h1 class="course-title text-center mb-4">@Model.Course.CourseName</h1>
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            @foreach (var chapter in Model.ChaptersList)
+            {
+                if (chapter.CourseId == Model.Course.CourseId)
+                {
+                    <div class="card mb-4">
+                        <div class="card-header">
+                            <h2 class="chapter-name mb-0" data-bs-toggle="collapse" data-bs-target="#lesson-list-@chapter.ChapterId" aria-expanded="false" aria-controls="lesson-list-@chapter.ChapterId">
+                                @chapter.ChapterName
+                            </h2>
+                        </div>
+                        <div class="collapse" id="lesson-list-@chapter.ChapterId">
+                            <div class="card-body">
+                                <p class="card-text">@chapter.Description</p>
+                                <ul class="lesson-list list-unstyled text-center">
+                                    @foreach (var lesson in Model.LessonsList)
+                                    {
+                                        if (chapter.ChapterId == lesson.ChapterId)
+                                        {
+                                            <li>
+                                                <a href="@Url.Action("LearnerLesson", "Lesson", new { chapterId = chapter.ChapterId, courseId = Model.Course.CourseId })" title="Lesson">@lesson.LessonName</a>
+                                            </li>
+                                        }
+                                    }
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+    document.querySelectorAll('.chapter-name').forEach(function (chapterName) {
+        chapterName.addEventListener('click', function () {
+            this.getAttribute('aria-expanded') === 'true'
+                ? this.setAttribute('aria-expanded', 'false')
+                : this.setAttribute('aria-expanded', 'true');
+        });
+    });
+</script>
+
+<style>
+    .course-title {
+        font-size: 24px;
+    }
+
+    .chapter-name {
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    .lesson-list li {
+        margin-bottom: 5px;
+    }
+</style>

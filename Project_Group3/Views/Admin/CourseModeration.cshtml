@@ -1,0 +1,145 @@
+@model Project_Group3.Models.ModelsView
+@{
+    ViewData["Title"] = "Course Moderation";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="/wwwroot/css/style.css" />
+<link rel="stylesheet" href="~/fonts/boxicons.css" />
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<div class="container-fluid mt-2 mb-3 p-0">
+    <div class="card mb-5 bg-theme">
+        <form asp-action="CourseModeration" class="mb-4">
+            <input asp-for="@Model.Course.CourseId" type="hidden" class="form-control">
+            <div class="card-body d-flex" style="justify-content: space-between;">
+                <div class="d-flex align-items-start align-items-sm-center gap-4 ml-5">
+                    <div class="mt-5 mr-4">
+                        <img class="avatar-initial rounded-circle bg-label-warning" src="~/img/1.png" style="width: 100%;">
+                    </div>
+                    <div class="id-text form-group">
+                        <label class="text-theme font-weight-bold">Make by:</label>
+                        @foreach (var instructor in Model.InstructorsList)
+                            {
+                                foreach (var instruct in Model.InstructsList)
+                                {
+                                    if (Model.Course.CourseId == instruct.CourseId && instructor.InstructorId == instruct.InstructorId)
+                                    {
+                                        <input value="@instructor.FirstName @instructor.LastName" class="form-control" style="width: 80%;" readonly/>
+                                    }
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid ml-5">
+                <div class="row">
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label class="text-theme font-weight-bold">Course Name</label>
+                            <input asp-for="@Model.Course.CourseName" class="form-control" style="width: 80%;" readonly/>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group"> 
+                            @{
+                                foreach (var category in Model.CategoriesList){
+                                    if(Model.Course.CategoryId == category.CategoryId){
+                                        <label class="text-theme font-weight-bold">Category Name</label>
+                                        <input asp-for="@category.CategoryName" class="form-control" style="width: 80%;" readonly/>
+                                    }
+                                }
+                            }
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label class="text-theme font-weight-bold">Price</label>
+                            <input asp-for="@Model.Course.Price" class="form-control" style="width: 80%;" readonly/>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label class="text-theme font-weight-bold">Total Time</label>
+                            <input asp-for="@Model.Course.TotalTime" class="form-control" style="width: 80%;" readonly/>
+                        </div>
+                    </div> 
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label class="text-theme font-weight-bold">Description</label><br>
+                            <textarea rows="3" cols="60" class="outline-0 mt-2" disabled>@Model.Course.Description</textarea>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label class="text-theme font-weight-bold">Status</label>
+                            <input asp-for="@Model.Course.Status" class="form-control" style="width: 80%;" readonly/>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container">
+                <!-- List of Chapter Start-->
+                @{
+                    foreach(var chapter in Model.ChaptersList){
+                        if(chapter.CourseId == Model.Course.CourseId){
+                            <div class="col-lg-12 col-md-12">
+                                <div class="box-chaper mb-2" data-bs-toggle="collapse" data-bs-target="#list-lesson@(chapter.Index)">
+                                    <div class="chapter-list d-flex">
+                                        <div class="chapter-item d-flex">
+                                            <i class='bx bx-plus text-primary mr-1 mt-3 ml-3'></i>
+                                            <h5 class="pt-3 text-theme"><b>@chapter.Index @chapter.ChapterName</b></h5>
+                                        </div>
+                                        @{
+                                            int lessonTmp = 0;
+                                            foreach(var lesson in Model.LessonsList){
+                                                if(chapter.ChapterId == lesson.ChapterId){
+                                                    lessonTmp++;
+                                                }
+                                            }
+                                        }
+                                        <p class="quanity-lesson text-dark text-end mr-4"><b>@lessonTmp</b> lesson</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div id="list-lesson@(chapter.Index)" class="collapse">
+                                <div class="container">
+                                    <div class="row">
+                                        <div class="col-lg-12 col-md-12">
+                                            <div class="box-chaper mb-2">
+                                                <div class=" d-flex">
+                                                    @{
+                                                        foreach(var lesson in Model.LessonsList){
+                                                            if(chapter.ChapterId == lesson.ChapterId){
+                                                                <a href="/Home/Learning/@lesson.LessonId" class="d-flex justify-content-between">
+                                                                    <div class="lesson-item d-flex ml-4">
+                                                                        <i class='text-primary bx bxs-caret-right-circle mr-1 mt-3 ml-3'></i>
+                                                                        <h6 class="pt-3">@lesson.Index. @lesson.LessonName</h6>
+                                                                    </div>
+                                                                    @{
+                                                                        int? hourLesson = @lesson.Time / 60; // Số giờ
+                                                                        int? minuteLesson = @lesson.Time % 60; // Số phút
+                                                                    }
+                                                                    <p class="quanity-lesson text-end mt-2 ml-5">@hourLesson : @minuteLesson</p>
+                                                                </a>
+                                                            }
+                                                        }
+                                                    }
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> 
+                            </div>
+                            <!-- List of Chapter End-->
+                        }
+                    }
+                }
+            </div>
+            <button type="submit" class="btn btn-success ml-5">Accept</button>
+            <a href="@Url.Action("Course", "Admin")" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+

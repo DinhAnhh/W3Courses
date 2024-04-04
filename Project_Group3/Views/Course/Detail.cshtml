@@ -1,0 +1,135 @@
+@model Tuple<WebLibrary.Models.Course, IEnumerable<WebLibrary.Models.Chapter>, IEnumerable<WebLibrary.Models.Category>,
+     IEnumerable<WebLibrary.Models.Instruct>, IEnumerable<WebLibrary.Models.Lesson>>;
+@{
+    ViewData["Title"] = "Detail";
+    Layout = "~/Views/Shared/_LayoutCourse.cshtml";
+}
+<link rel="stylesheet" href="/wwwroot/css/site.css" />
+<link rel="stylesheet" href="~/fonts/boxicons.css" />
+
+
+<div class="container-fluid mt-2 mb-3 p-0">
+    <div class="card mb-4 bg-theme">
+        <div class="card-body d-flex" style="justify-content: space-between;">
+            <div class="d-flex align-items-start align-items-sm-center gap-4 ml-5">
+                <div class="mt-5">
+                     <img class="img-fluid" src="~/img/avatars/course/course-2.jpg" alt="" style="width: 60%;">
+                </div>
+                <div class="id-text form-group">
+                    <label class="text-theme font-weight-bold">Course ID</label>
+                    <input value="@Model.Item1.CourseId" class="form-control" style="width: 80%;" disabled/>
+                </div>
+            </div>
+        </div>
+        <div class="container-fluid ml-5">
+            <div class="row">
+                <div class="mb-3 col-md-6">
+                    <div class="form-group">
+                        <label class="text-theme font-weight-bold">Course Name</label>
+                        <input value="@Model.Item1.CourseName" class="form-control" style="width: 80%;" disabled/>
+                    </div>
+                </div>
+                <div class="mb-3 col-md-6">
+                    <div class="form-group"> 
+                        @{
+                            foreach (var category in Model.Item3){
+                                if(Model.Item1.CategoryId == category.CategoryId){
+                                    <label class="text-theme font-weight-bold">Category Name</label>
+                                    <input value="@category.CategoryName" class="form-control" style="width: 80%;" disabled/>
+                                }
+                            }
+                        }
+                    </div>
+                </div>
+                <div class="mb-3 col-md-6">
+                    <div class="form-group">
+                        <label class="text-theme font-weight-bold">Price</label>
+                        <input value="@Model.Item1.Price" class="form-control" style="width: 80%;" disabled/>
+                    </div>
+                </div>
+                <div class="mb-3 col-md-6">
+                    <div class="form-group">
+                        <label class="text-theme font-weight-bold">Total Time</label>
+                        <input value="@Model.Item1.TotalTime" class="form-control" style="width: 80%;" disabled/>
+                    </div>
+                </div> 
+                <div class="mb-3 col-md-6">
+                    <div class="form-group">
+                        <label class="text-theme font-weight-bold">Description</label><br>
+                        <textarea rows="3" cols="60" class="outline-0 mt-2" disabled>@Model.Item1.Description</textarea>
+                    </div>
+                </div>
+                <div class="mb-3 col-md-6">
+                    <div class="form-group">
+                        <label class="text-theme font-weight-bold">Status</label>
+                        <input value="@Model.Item1.Status" class="form-control" style="width: 80%;" disabled/>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <!-- List of Chapter Start-->
+            @{
+                foreach(var chapter in Model.Item2){
+                    if(chapter.CourseId == Model.Item1.CourseId){
+                        <div class="col-lg-12 col-md-12">
+                            <div class="box-chaper mb-2" data-bs-toggle="collapse" data-bs-target="#list-lesson@(chapter.Index)">
+                                <div class="chapter-list d-flex">
+                                    <div class="chapter-item d-flex">
+                                        <i class='bx bx-plus text-primary mr-1 mt-3 ml-3'></i>
+                                        <h5 class="pt-3 text-theme"><b>@chapter.Index @chapter.ChapterName</b></h5>
+                                    </div>
+                                    @{
+                                        int lessonTmp = 0;
+                                        foreach(var lesson in Model.Item5){
+                                            if(chapter.ChapterId == lesson.ChapterId){
+                                                lessonTmp++;
+                                            }
+                                        }
+                                    }
+                                    <p class="quanity-lesson text-dark text-end mr-4"><b>@lessonTmp</b> lesson</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="list-lesson@(chapter.Index)" class="collapse">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-lg-12 col-md-12">
+                                        <div class="box-chaper mb-2">
+                                            <div class=" d-flex">
+                                                @{
+                                                    foreach(var lesson in Model.Item5){
+                                                        if(chapter.ChapterId == lesson.ChapterId){
+                                                            <a href="/Home/Learning/@lesson.LessonId" class="d-flex justify-content-between">
+                                                                <div class="lesson-item d-flex ml-4">
+                                                                    <i class='text-primary bx bxs-caret-right-circle mr-1 mt-3 ml-3'></i>
+                                                                    <h6 class="pt-3">@lesson.Index. @lesson.LessonName</h6>
+                                                                </div>
+                                                                @{
+                                                                    int? hourLesson = @lesson.Time / 60; // Số giờ
+                                                                    int? minuteLesson = @lesson.Time % 60; // Số phút
+                                                                }
+                                                                <p class="quanity-lesson text-end mt-2 ml-5">@hourLesson : @minuteLesson</p>
+                                                            </a>
+                                                        }
+                                                    }
+                                                }
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div> 
+                        </div>
+                        <!-- List of Chapter End-->
+                    }
+                }
+            }
+        </div>
+        @{
+            var cookieValue = Context.Request.Cookies["ID"];
+        }
+        <a href="@Url.Action("Index", "Course", new { id = cookieValue })" class="btn btn-secondary ml-5 mb-5 mt-5" style="width: 8rem;">Back</a>
+    </div>
+</div>
+

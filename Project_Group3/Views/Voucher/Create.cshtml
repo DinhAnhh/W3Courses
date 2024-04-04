@@ -1,0 +1,51 @@
+@model WebLibrary.Models.Voucher
+@{
+    ViewData["Title"] = "Create Voucher";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/fonts/boxicons.css" />
+<div class="card bg-theme p-0 mt-2 mb-5">
+    <div class="container my-3">
+        <form asp-action="Create">
+            <input asp-for="AdminId" type="hidden" class="form-control">
+            <div class="mb-3 text-theme">
+                <label asp-for="PercentDiscount" class="form-label">Percentage Discount</label>
+                <input asp-for="PercentDiscount" type="number" class="form-control">
+                <span asp-validation-for="PercentDiscount" class="text-danger"></span>
+            </div>
+            <div class="mb-3 text-theme">
+                <label asp-for="StartAt" class="form-label">Start Date</label>
+                <input asp-for="StartAt" type="datetime-local" class="form-control">
+                <span asp-validation-for="StartAt" class="text-danger"></span>
+            </div>
+            <div class="mb-3 text-theme">
+                <label asp-for="EndAt" class="form-label">End Date</label>
+                <input asp-for="EndAt" type="datetime-local" class="form-control">
+                <span asp-validation-for="EndAt" class="text-danger"></span>
+            </div>
+            <div class="mb-3 text-theme form-check" style="width: 20%; margin-left: -1rem;">
+                <label asp-for="IsActive" class="form-check-label font-weight-bold mr-4">Active</label>
+                <select asp-for="IsActive" class="form-control">
+                    <option value="">-- Select --</option>
+                    <option value="true">Yes</option>
+                    <option value="false">No</option>
+                </select>
+                <span asp-validation-for="IsActive" class="text-danger"></span>
+            </div>
+
+            <p class="text-danger">@ViewBag.err</p>
+            <button type="submit" class="btn btn-success">Create</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+
+@{
+    var errorMessage = ViewBag.Message as string;
+}
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-danger">@errorMessage</div>
+}

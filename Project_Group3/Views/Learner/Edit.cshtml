@@ -1,0 +1,113 @@
+@model WebLibrary.Models.Learner
+@{
+    ViewBag.Title = "Edit Instructor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid mt-2 mb-3 p-0">
+    <div class="card mb-4 bg-theme">
+        <form asp-action="Edit" class="mb-4">
+            <input type="hidden" asp-for="@Model.Username" />
+            <input type="hidden" asp-for="@Model.Password" />
+            <input type="hidden" asp-for="@Model.Picture" />
+            <div class="card-body d-flex" style="justify-content: space-between;">
+                <div class="d-flex align-items-start align-items-sm-center gap-4 ml-5">
+                    <div class=" mr-2 mt-5">
+                        @{
+                            if(@Model.Picture == null){
+                                <img class="avatar-initial rounded-circle bg-label-warning" src="~/img/avatars/1.png">        
+                            }else{
+                                <img class="avatar-initial rounded-circle bg-label-warning" src="@Model.Picture" style="width: 30%;">
+                            }
+                        }
+                    </div>
+                    <div class="id-text form-group">
+                        <label class="text-theme font-weight-bold">LearnerId</label>
+                        <input value="@Model.LearnerId" class="form-control" style="width: 80%;" readonly/>
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid ml-5">
+                <div class="row">
+                    <input type="hidden" asp-for="LearnerId" />
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label class="text-theme font-weight-bold">FirstName</label>
+                            <input asp-for="FirstName" class="form-control" style="width: 80%;" readonly/>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label class="text-theme font-weight-bold">LastName</label>
+                            <input asp-for="LastName" class="form-control" style="width: 80%;" readonly/>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label class="text-theme font-weight-bold">Gender</label>
+                            <input asp-for="Gender" class="form-control" style="width: 80%;" readonly/>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label class="text-theme font-weight-bold">Country</label>
+                            <input asp-for="Country" class="form-control" style="width: 80%;" readonly/>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label class="text-theme font-weight-bold">Email</label>
+                            <input asp-for="Email" class="form-control" style="width: 80%;" readonly/>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label class="text-theme font-weight-bold">PhoneNumber</label>
+                            <input asp-for="PhoneNumber" class="form-control" style="width: 80%;" readonly/>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label class="text-theme font-weight-bold">Birthday</label>
+                            <input asp-for="Birthday" class="form-control" style="width: 80%;" readonly/>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label class="text-theme font-weight-bold">Registration Date</label>
+                            <input asp-for="RegistrationDate" class="form-control" style="width: 80%;" readonly/>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label class="text-theme font-weight-bold">Status</label>
+                            <select asp-for="Status" class="form-control" style="width: 80%;">
+                                @{
+                                    if(Model.Status == "Active"){
+                                        <option value="Active" selected>Active</option>
+                                        <option value="Delete">Delete</option>
+                                        <option value="Block">Block</option>
+                                    }else if(Model.Status == "Delete"){
+                                        <option value="Active">Active</option>
+                                        <option value="Delete" selected>Delete</option>
+                                        <option value="Block">Block</option>
+                                    }else if(Model.Status == "Block"){
+                                        <option value="Active">Active</option>
+                                        <option value="Delete">Delete</option>
+                                        <option value="Block" selected>Block</option>
+                                    }
+                                }
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary ml-5">Save</button>
+            <a href="@Url.Action("Learner", "Admin")" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

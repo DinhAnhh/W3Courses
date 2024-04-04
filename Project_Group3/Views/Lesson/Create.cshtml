@@ -1,0 +1,60 @@
+@model WebLibrary.Models.Lesson;
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_LayoutCourse.cshtml";
+}
+<link rel="stylesheet" href="~/css/site.css" />
+<link rel="stylesheet" href="~/fonts/boxicons.css" />
+<h1>@ViewBag.err</h1>
+<div class="container-fluid mt-2 mb-3 p-0">
+    <div class="card mb-4 bg-theme">
+        <form asp-action="Create" class="ml-5 mt-3 mb-3" enctype="multipart/form-data">
+            <div class="container-fluid">
+                <div class="row">
+                    <input asp-for="ChapterId" type="hidden" value="@ViewBag.ChapterId" class="form-control"
+                        style="width: 80%;" />
+                    <input asp-for="CourseId" type="hidden" value="@ViewBag.CourseId" class="form-control"
+                        style="width: 80%;" />
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label class="text-theme font-weight-bold">Lesson Name</label>
+                            <input asp-for="LessonName" class="form-control" style="width: 80%;" required />
+                            <span asp-validation-for="LessonName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Description" class="text-theme font-weight-bold"></label>
+                            <textarea asp-for="Description" class="form-control" style="width: 80%;"
+                                required></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Content" class="text-theme font-weight-bold"></label>
+                            <input asp-for="Content" name="video" type="file" class="form-control" style="width: 80%;"
+                                required />
+                            <span asp-validation-for="Content" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Index" class="text-theme font-weight-bold"></label>
+                            <input asp-for="Index" class="form-control" style="width: 80%;" required />
+                            <span asp-validation-for="Index" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success mr-3">Create</button>
+            <a asp-action="Index" asp-route-chapterId="@ViewBag.ChapterId" asp-route-courseId="@ViewBag.CourseId"
+                class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

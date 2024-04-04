@@ -1,0 +1,347 @@
+@model Tuple<WebLibrary.Models.Instructor, WebLibrary.Models.Learner, IEnumerable<WebLibrary.Models.Enrollment>>
+
+@{
+    ViewData["Title"] = "Infomation";
+    Layout = "~/Views/Shared/_LayoutHome.cshtml";
+    var role = Context.Request.Cookies["Role"];
+}
+<link rel="stylesheet" href="~/css/style.css" />
+<link rel="stylesheet" href="~/js/site.js" />
+<link rel="stylesheet" href="~/fonts/boxicons.css" />
+
+<div class="container py-5">
+    <div class="mb-2">
+        <h6 class="text-primary mb-3">
+            <a href="@Url.Action("Index", "Home")">Home</a> >
+            <a href="#">My profile</a>
+        </h6>
+    </div>
+    <div class="row">
+        <div class="col-md-3 col-lg-3">
+            <div class="contact-form rounded p-5" style="background-color: #F3F4F6">
+                <ul class="navbar-nav list-unstyled" style="margin-top: -30px;">
+                    <li class="nav-item pt-2">
+                        <a class="nav-link text-theme" href="#changepass">Information</a>
+                    </li>
+                    <li class="nav-item pt-2">
+                        <a class="nav-link text-theme" href="#information">Change Password</a>
+                    </li>
+                    <li class="nav-item pt-2">
+                        <a class="nav-link text-theme" href="#transaction">Transaction</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div id="information" class="information col-md-9 col-lg-9">
+            <div class="contact-form rounded p-5" style="background-color: #F3F4F6">
+                <h4 class="text-dark" style="margin-top: -20px;">Information</h4>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-3 col-lg-3">
+                            <div class="team-item">
+                                <div class="team-img">
+                                    <img class="img-fluid rounded-circle" src="~/img/1.png" alt="">
+                                </div>                                
+                            </div>
+                        </div>
+                        <div class="col-md-9 col-lg-9">
+                            <div class="container mt-2">
+                                <div class="row">
+                                    <div class="info-title col-md-4 col-lg-4 text-dark">
+                                        <label>Full name: <i class="text-danger">*</i></label><br>
+                                        <label>Gender: </label><br>
+                                        <label>Birthday: </label><br>
+                                        <label>Phone number: <i class="text-danger">*</i></label><br>
+                                        <label>Email address: <i class="text-danger">*</i></label><br>
+                                        <label>Country/Region: <i class="text-danger">*</i></label><br>
+                                    </div>
+                                    <div class="info-title col-md-8 col-lg-8 text-dark">
+                                        @{
+                                            if(role == "instructor"){
+                                                <div class="d-flex" style="justify-content: space-between;">
+                                                    <label>@Model.Item1.FirstName @Model.Item1.LastName</label>
+                                                    <a class="btn mr-2" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#edit" title="Edit">
+                                                        <i class='bx bxs-pencil text-primary'></i><br>
+                                                    </a>
+                                                </div>
+                                                <label>@Model.Item1.Gender</label><br>
+                                                <label>@Model.Item1.Birthday.Value.ToShortDateString()</label><br>
+                                                <label>@Model.Item1.PhoneNumber</label><br>
+                                                <label>@Model.Item1.Email</label><br>
+                                                <label>@Model.Item1.Country</label><br>
+                                            }else if(role == "learner"){
+                                                <div class="d-flex" style="justify-content: space-between;">
+                                                    <label>@Model.Item2.FirstName @Model.Item2.LastName</label>
+                                                    <a class="btn mr-2" style="cursor: pointer;" data-bs-toggle="modal" data-bs-target="#edit" title="Edit">
+                                                        <i class='bx bxs-pencil text-primary'></i><br>
+                                                    </a>
+                                                </div>
+                                                <label>@Model.Item2.Gender</label><br>
+                                                <label>@Model.Item2.Birthday.Value.ToShortDateString()</label><br>
+                                                <label>@Model.Item2.PhoneNumber</label><br>
+                                                <label>@Model.Item2.Email</label><br>
+                                                <label>@Model.Item2.Country</label><br>
+                                            }
+                                        }
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <h4 class="text-dark mt-5 mb-4">Learning outcomes</h4>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="rounded overflow-hidden mb-2 border">
+                                <img class="img-fluid" src="~/img/avatars/course/course-1.jpg" alt="">
+                                <div class="p-4">
+                                    <a class="h6" href="course-intro.html">Web design & development courses for beginner</a>
+                                    <div class="d-flex justify-content-between mt-3">
+                                        <h6 class="m-0"><i class="fa fa-star text-warning mr-2"></i>4.5</h6>
+                                        <div class="progess-info"><label>10%</label></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="rounded overflow-hidden mb-2 border">
+                                <img class="img-fluid" src="~/img/avatars/course/course-1.jpg" alt="">
+                                <div class=" p-4" style="background-color: #F3F4F6">
+                                    <a class="h6" href="course-intro.html">Web design & development courses for beginner</a>
+                                    <div class="d-flex justify-content-between mt-3">
+                                        <h6 class="m-0"><i class="fa fa-star text-warning mr-2"></i>4.5</h6>
+                                        <div class="progess-info"><label>10%</label></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-4 col-md-6 mb-4">
+                            <div class="rounded overflow-hidden mb-2 border">
+                                <img class="img-fluid" src="~/img/avatars/course/course-1.jpg" alt="">
+                                <div class=" p-4" style="background-color: #F3F4F6">
+                                    <a class="h6" href="course-intro.html">Web design & development courses for beginner</a>
+                                    <div class="d-flex justify-content-between mt-3">
+                                        <h6 class="m-0"><i class="fa fa-star text-warning mr-2"></i>4.5</h6>
+                                        <div class="progess-info"><label>10%</label></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Change Password -->
+        <div id="changepass" class="changepass col-md-9 col-lg-9" style="display: none;">
+            <div class="contact-form rounded p-5" style="background-color: #F3F4F6">
+                <h4 class="text-dark" style="margin-top: -20px;">Change password</h4>
+                <div class="container">
+                    <div class="row">
+                        <div class="col-md-9 col-lg-9">
+                            <div class="container mt-3">
+                                <div class="row">
+                                    <div class=" col-md-12 col-lg-12 text-dark">
+                                        <form action="" method="">
+                                            <label class="mt-2">Password:</label><br>
+                                            <input type="password" class="form-control" placeholder="Password">
+                                            <label class="mt-4">New Password:</label><br>
+                                            <input type="password" class="form-control" placeholder="New Password">
+                                            <label class="mt-4">Confirm Password:</label><br>
+                                            <input type="password" class="form-control" placeholder="Confirm Password">
+                                            <button class="btn btn-primary mt-3 float-right" type="submit">Change</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="transaction" class="transaction col-md-9 col-lg-9" style="display: none;">
+            <div class="contact-form rounded p-5" style="background-color: #F3F4F6">
+                <h4 class="text-dark" style="margin-top: -20px;">Transaction</h4>
+                <div class="container-fluid">
+                    <div class="row m-0">
+                        @{
+                            int countEnrollment = 0;
+                            foreach(var enrollment in Model.Item3){
+                                if(Model.Item2.LearnerId == enrollment.LearnerId){
+                                    countEnrollment++;
+                                    <div class="col-md-12 col-lg-12 bg-white py-3 mb-2" data-bs-toggle="collapse" data-bs-target="#en@(countEnrollment)">
+                                        <div class="transaction-info">
+                                            <strong>Date:</strong> @enrollment.EnrollmentDate
+                                            <br>
+                                            <strong>Course Name:</strong> @enrollment.CourseName
+                                            <br>
+                                        </div>
+                                        <div id="en@(countEnrollment)" class="collapse">
+                                            @{
+                                                if(@enrollment.IsPaid == true){
+                                                    <strong>Status: </strong><small style="font-size: .9rem;" class="text-success">Success</small>
+                                                }else{
+                                                    <strong>Status: </strong><small style="font-size: .9rem;" class="text-danger">Fail</small>
+                                                }
+                                            }
+                                            <br>
+                                            <strong>Details:</strong>
+                                            This transaction is for the course "@enrollment.CourseName" enrolled on @enrollment.EnrollmentDate. 
+                                            The payment for this course has been successfully processed and the status is marked as paid. You have
+                                             successfully completed the payment for the course and gained access to all course materials and resources. 
+                                             Enjoy your learning journey and make the most out of the course content to enhance your web development skills.sequat.
+                                        </div>
+                                    </div>
+                                }
+
+                            }
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- view all my Courses -->
+    </div>
+</div>
+<!-- Information End -->
+
+<!-- Modal -->
+<div class="modal fade mt-5" id="edit" tabindex="-1" aria-labelledby="enrollLabel" aria-hidden="true" style="width: 100rem;">
+    <div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="enrollLabel">Edit infomation</h5>
+            <button type="button" class="btn-close bg-theme text-theme border-0" data-bs-dismiss="modal" aria-label="Close">x</button>
+        </div>
+        <div class="modal-body">
+            @{
+                if(role == "instructor"){
+                    <form action="@Url.Action("EditProfile", "Instructor", new { id = Model.Item1.InstructorId })" method="post" class="mb-3" enctype="multipart/form-data">
+                        <div class="container-fluid">
+                            <div class="d-flex align-items-start align-items-sm-center">
+                                <div class="mr-2 mb-3">
+                                    <img class="avatar-initial rounded-circle bg-label-warning" src="~/img/1.png" style="width: 30%">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label class="text-theme font-weight-bold">First Name</label>
+                                        <input asp-for="@Model.Item1.FirstName" class="form-control" style="width: 100%;" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label class="text-theme font-weight-bold">Last Name</label>
+                                        <input asp-for="@Model.Item1.LastName" class="form-control" style="width: 100%;" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label class="text-theme font-weight-bold">Gender</label>
+                                        <select asp-for="@Model.Item1.Gender" class="form-control" style="width: 100%;">
+                                            @{
+                                                if(Model.Item1.Gender == "Male"){
+                                                    <option value="Active" selected>Male</option>
+                                                    <option value="Female">Female</option>
+                                                }else if(Model.Item1.Gender == "Female"){
+                                                    <option value="Active">Male</option>
+                                                    <option value="Delete" selected>Female</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label class="text-theme font-weight-bold">Country</label>
+                                        <input asp-for="@Model.Item1.Country" class="form-control" style="width: 100%;" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label class="text-theme font-weight-bold">Phone Number</label>
+                                        <input asp-for="@Model.Item1.PhoneNumber" class="form-control" style="width: 100%;" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label class="text-theme font-weight-bold">Birthday</label>
+                                        <input asp-for="@Model.Item1.Birthday" class="form-control" style="width: 100%;" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a asp-action="Index" class="btn btn-secondary mt-2 float-right">Cancel</a>
+                        <button type="submit" class="btn btn-success mr-3 mt-2 float-right">Save</button>
+                    </form>
+                }else if(role == "learner"){
+                    <form action="@Url.Action("Profile", "Learner",  new { id = Model.Item2.LearnerId })" method="post" class="mb-3" enctype="multipart/form-data">
+                        <div class="container-fluid">
+                            <input type="hidden" asp-for="@Model.Item2.LearnerId"/>
+                            <div class="d-flex align-items-start align-items-sm-center">
+                                <div class="mr-2 mb-3">
+                                    <img class="avatar-initial rounded-circle bg-label-warning" src="~/img/1.png" style="width: 30%">
+                                    <label class="text-theme">Upload avatar</label>
+                                    <input type="file" name="fileAnh" class="text-theme">
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label class="text-theme font-weight-bold">First Name</label>
+                                        <input asp-for="@Model.Item2.FirstName" class="form-control" style="width: 100%;" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label class="text-theme font-weight-bold">Last Name</label>
+                                        <input asp-for="@Model.Item2.LastName" class="form-control" style="width: 100%;" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label class="text-theme font-weight-bold">Gender</label>
+                                        <select asp-for="@Model.Item2.Gender" class="form-control" style="width: 100%;">
+                                            @{
+                                                if(Model.Item2.Gender == "Male"){
+                                                    <option value="Active" selected>Male</option>
+                                                    <option value="Female">Female</option>
+                                                }else if(Model.Item2.Gender == "Female"){
+                                                    <option value="Active">Male</option>
+                                                    <option value="Delete" selected>Female</option>
+                                                }
+                                            }
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label class="text-theme font-weight-bold">Country</label>
+                                        <input asp-for="@Model.Item2.Country" class="form-control" style="width: 100%;" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label class="text-theme font-weight-bold">Phone Number</label>
+                                        <input asp-for="@Model.Item2.PhoneNumber" class="form-control" style="width: 100%;" />
+                                    </div>
+                                </div>
+                                <div class="col-md-6 col-lg-6">
+                                    <div class="form-group">
+                                        <label class="text-theme font-weight-bold">Birthday</label>
+                                        <input asp-for="@Model.Item2.Birthday" class="form-control" style="width: 100%;" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <a asp-action="Index" class="btn btn-secondary mt-2 float-right">Cancel</a>
+                        <button type="submit" class="btn btn-success mr-3 mt-2 float-right">Save</button>
+                    </form>
+                }
+            }
+        </div>
+    </div>
+</div>
+

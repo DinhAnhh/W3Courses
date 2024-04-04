@@ -1,0 +1,23 @@
+@model Project_Group3.Controllers.UserController
+@{
+    Layout = null;
+}
+<link rel="stylesheet" href="~/css/otp.css">
+<script src="~/js/otp.js" defer></script>
+<link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet" />
+<div class="container">
+    <header>
+        <i class="bx bxs-check-shield"></i>
+    </header>
+    <h4>Enter OTP Code</h4>
+    <form asp-action="otp" method="post">
+        <div class="input-field">
+            <input type="number" name="otp" />
+            <input type="number" name="otp1" disabled />
+            <input type="number" name="otp2" disabled />
+            <input type="number" name="otp3" disabled />
+            <input type="number" name="otp4" disabled />
+        </div>
+        <button type="submit">Verify OTP</button>
+    </form>
+</div>

@@ -1,0 +1,112 @@
+@model Project_Group3.Models.ModelsView
+@{
+    ViewData["Title"] = "Course Management | Chapter";
+      Layout = "~/Views/Shared/_LayoutCourse.cshtml";
+}
+<link rel="stylesheet" href="~/css/site.css" />
+<link rel="stylesheet" href="~/fonts/boxicons.css" />
+@{
+    var idInstructor = int.Parse(Context.Request.Cookies["ID"]);
+}
+
+<div class="card bg-theme p-0 mt-2 mb-5">
+    <div class="container no-footer mt-4 mb-3 p-0">
+        <div class="text-primary mb-4">
+            <a class="mb-5" href="@Url.Action("Index", "Course", new {id = @idInstructor})">Course </a>/
+            <a class="mb-5" href="javascript:void(0);">Chapter </a>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-6">
+                <div class="container-fluid">
+                    <form class="table-search d-flex" action="/chapter/">
+                        <input type="hidden" name="courseId" value="@idInstructor" />
+                        <input class="form-control" value="@ViewBag.search" type="search" name="search"
+                            placeholder="Search">
+                        <button class="btn btn-primary btn-outline-primary ml-2" type="submit">
+                            <i class='bx bx-search-alt-2'></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 float-right">
+                <a class="btn btn-warning mb-2 float-right " href="@Url.Action("Index", "Answer", new { courseId = ViewBag.CourseId })">Answer</a>
+                <a class="btn btn-success mb-2 float-right mr-3" href="@Url.Action("Create", "Chapter", new { courseId = ViewBag.CourseId })">Add new Chapter</a>
+            </div>
+        </div>
+    </div>
+    <div class="container p-0 mt-3">
+        <table class="datatables-basic table mb-5">
+            <thead>
+                <tr>
+                    <th width="10"><input type="checkbox" id="all" class="checkbox-item"></th>
+                    <th width="200" class="text-theme">ChapterName</th>
+                    <th width="70" class="text-theme">Index</th>
+                    <th width="350" class="text-theme">Description</th>
+                    <th width="120" class="text-theme">Total Time</th>
+                    <th width="120" class="text-theme">Total Lesson</th>
+                    <th width="70" class="text-theme">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+            @{
+                if (Model != null)
+                    {
+                        foreach (var chapter in Model.ChaptersList)
+                        {
+                            <tr>
+                                <td class="  dt-checkboxes-cell">
+                                    <input type="checkbox">
+                                </td>
+                                <td>@chapter.ChapterName</td>
+                                <td class="text-center">@chapter.Index</td>
+                                <td>@chapter.Description</td>
+                                <td class="text-center">@chapter.TotalTime</td>    
+                                @{
+                                    int countlesson = 0;
+                                    foreach(var lesson in Model.LessonsList){
+                                        if(lesson.ChapterId == chapter.ChapterId){
+                                            countlesson++;
+                                        }
+                                    }
+                                }
+                                <td class="text-center">@countlesson</td>
+                                <td class="text-theme">
+                                    <div class="action-icon d-flex text-center">
+                                        <a class="btn btn-info mr-2"
+                                            href="@Url.Action("Index", "lesson", new { chapterId = chapter.ChapterId, courseId = ViewBag.CourseId })" title="Lesson">
+                                            <i class='bx bxs-book-bookmark'></i>
+                                        </a>
+                                        <a class="btn btn-primary mr-2"
+                                            href="@Url.Action("Index", "Quiz", new { chapterId = chapter.ChapterId, courseId = ViewBag.CourseId })" title="Quiz">
+                                            <i class='bx bxs-notepad'></i>
+                                        </a>
+                                        <a class="btn btn-warning mr-2"
+                                            href="@Url.Action("Edit", "Chapter", new {id = @chapter.ChapterId})" title="Edit">
+                                            <i class='bx bxs-edit'></i>
+                                        </a>
+                                        <a class="btn btn-danger" asp-action="delete" asp-route-id="@chapter.ChapterId "
+                                            title="Delete">
+                                            <i class='bx bxs-trash-alt'></i>
+                                        </a>
+                                    </div>
+                                </td>
+                                
+                                
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="6">No chapters found.</td>
+                        </tr>
+                    }
+            }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }

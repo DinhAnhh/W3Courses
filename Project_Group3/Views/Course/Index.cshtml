@@ -1,0 +1,113 @@
+@model Project_Group3.Models.ModelsView
+
+@{
+    ViewData["Title"] = "Course Management";
+    Layout = "~/Views/Shared/_LayoutCourse.cshtml";
+}
+<link rel="stylesheet" href="~/css/site.css" />
+<link rel="stylesheet" href="~/fonts/boxicons.css" />
+@{
+    var idInstructor = int.Parse(Context.Request.Cookies["ID"]);
+}
+
+<div class="card bg-theme p-0 mt-2 mb-5">
+    <div class="container no-footer mt-5 mb-3 p-0">
+        <div class="row">
+            <div class="col-sm-12 col-md-6">
+                <div class="container-fluid">
+                    <form class="table-search d-flex" action="/course/index/@idInstructor/" method="GET">
+                        <input class="form-control" value="@ViewBag.search" type="search" name="search"
+                            placeholder="Search">
+                        <button class="btn btn-primary btn-outline-primary ml-2" type="submit">
+                            <i class='bx bx-search-alt-2'></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 float-right">
+                <a class="btn btn-success float-right" asp-action="Create">Add new Course</a>
+            </div>
+        </div>
+    </div>
+    <div class="container p-0 mt-3">
+        <table class="datatables-basic table mb-5">
+            <thead>
+                <tr>
+                    <th width="10"><input type="checkbox" id="all" class="checkbox-item"></th>
+                    <th width="350" class="text-theme">Course Name</th>
+                    <th width="150" class="text-theme">Category</th>
+                    <th width="100" class="text-theme">Total Time</th>
+                    <th width="100" class="text-theme">Price</th>
+                    <th width="120" class="text-theme">Total Chapter</th>
+                    <th width="20" class="text-theme">Status</th>
+                    <th width="70" class="text-theme">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach (var course in Model.CourseList)
+                    {
+                        foreach (var instruct in Model.InstructsList)
+                        {
+                            if (course.CourseId == instruct.CourseId && Model.Instructor.InstructorId == instruct.InstructorId)
+                            {
+                                <tr class="">
+                                    <td class="  dt-checkboxes-cell">
+                                        <input type="checkbox">
+                                    </td>
+                                    <td class="text-theme">
+                                        <a href="/course/detail/@course.CourseId">@course.CourseName</a>
+                                    </td>
+                                    @foreach (var category in Model.CategoriesList)
+                                    {
+                                        if (category.CategoryId == course.CategoryId)
+                                        {
+                                            <td class="text-theme">@category.CategoryName</td>
+                                        }
+                                    }
+                                    <td class="text-center">@course.TotalTime</td>
+                                    <td class="text-theme">@course.Price</td>
+                                    @{
+                                        int count = 0;
+                                        foreach (var chapter in Model.ChaptersList)
+                                        {
+                                            if (chapter.CourseId == course.CourseId)
+                                            {
+                                                count++;
+                                            }
+                                        }
+                                        <td class="text-center">@count</td>
+                                    }
+                                    <td>
+                                        <span class="badge bg-label-success text-theme">@course.Status</span>
+                                    </td>
+                                    <td class="text-theme">
+                                        <div class="action-icon d-flex text-center">
+                                            <a class="btn btn-info mr-2"
+                                                href="@Url.Action("Index", "chapter", new { courseId = @course.CourseId})"
+                                                title="Chapter">
+                                                <i class='bx bxs-book-bookmark'></i>
+                                            </a>
+                                            <a class="btn btn-warning mr-2"
+                                                href="@Url.Action("Edit", "Course", new {id = @course.CourseId})" title="Edit">
+                                                <i class='bx bxs-edit'></i>
+                                            </a>
+                                            <a class="btn btn-danger" href="@Url.Action("Delete", "Course", new {id = @course.CourseId})"
+                                                title="Delete">
+                                                <i class='bx bxs-trash-alt'></i>
+                                            </a>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

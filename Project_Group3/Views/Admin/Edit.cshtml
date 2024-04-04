@@ -1,0 +1,96 @@
+@model Project_Group3.Models.ModelsView
+@{
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="~/css/style.css" />
+<link rel="stylesheet" href="~/fonts/boxicons.css" />
+<div class="container-fluid mt-2 mb-3 p-0">
+    <div class="card mb-4 bg-theme">
+        <form asp-action="Edit" class="ml-5 mt-3 mb-3" enctype="multipart/form-data">
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="mb-3 col-md-6">
+                        <div class="mb-3 col-md-6">
+                            <div class="form-group">
+                                <input type="hidden" asp-for="@Model.Course.CourseId">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.Course.CategoryId" class="text-theme font-weight-bold"></label>
+                            <select asp-for="@Model.Course.CategoryId" asp-items="@ViewBag.CategoryList"
+                                class="form-control" required>
+                                <option value="">-- Select Category --</option>
+                            </select>
+                            <span asp-validation-for="@Model.Course.CategoryId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="@Model.Course.CourseName" class="text-theme font-weight-bold"></label>
+                            <input asp-for="@Model.Course.CourseName" class="form-control" required />
+                            <span asp-validation-for="@Model.Course.CourseName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="@Model.Course.Description" class="text-theme font-weight-bold"></label>
+                            <input asp-for="@Model.Course.Description" class="form-control" required />
+                            <span asp-validation-for="@Model.Course.Description" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="@Model.Course.Picture" class="text-theme font-weight-bold"></label>
+                            <input asp-for="@Model.Course.Picture" name="picture" type="file" class="form-control" />
+                            <span asp-validation-for="@Model.Course.Picture" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="@Model.Course.TotalTime" class="text-theme font-weight-bold"></label>
+                            <input asp-for="@Model.Course.TotalTime" class="form-control" required />
+                            <span asp-validation-for="@Model.Course.TotalTime" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="@Model.Course.Price" class="text-theme font-weight-bold"></label>
+                            <input asp-for="@Model.Course.Price" class="form-control"/>
+                            <span asp-validation-for="@Model.Course.Price" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="@Model.Course.Status" class="text-theme font-weight-bold"></label>
+                            <select asp-for="@Model.Course.Status" class="form-control" required>
+                                <option value="">Please select...</option>
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                            </select>
+                            <span asp-validation-for="@Model.Course.Status" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-success mr-3">Update</button>
+            <a href="@Url.Action("Course", "Admin")" class="btn btn-secondary">Cancel to Admin</a>
+        </form>
+    </div>
+</div>
+
+@{
+    var errorMessage = ViewBag.Message as string;
+}
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-danger">@errorMessage</div>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

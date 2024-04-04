@@ -1,0 +1,94 @@
+@model IEnumerable<WebLibrary.Models.Lesson>;
+
+@{
+    ViewData["Title"] = "Course Management | Lesson";
+    Layout = "~/Views/Shared/_LayoutCourse.cshtml";
+}
+<link rel="stylesheet" href="~/css/site.css" />
+<link rel="stylesheet" href="~/fonts/boxicons.css" />
+
+@{
+    var idInstructor = int.Parse(Context.Request.Cookies["ID"]);
+}
+
+<div class="card bg-theme p-0 mt-2 mb-5">
+    <div class="container no-footer mt-4 mb-3 p-0">
+        <div class="text-primary mb-4">
+            <a class="mb-5" href="@Url.Action("Index", "course", new {id = @idInstructor})">Course </a>/
+            <a class="mb-5" href="@Url.Action("Index", "chapter", new { courseId = ViewBag.CourseId })">Chapter </a>/
+            <a class="mb-5" href="javascript:void(0);">Lesson</a>
+        </div>
+        <div class="row">
+            <div class="col-sm-12 col-md-6">
+                <div class="container-fluid">
+                    <form class="table-search d-flex" action="/lesson">
+                        <input type="hidden" name="chapterId" value="@ViewBag.ChapterId" />
+                        <input type="hidden" name="courseId" value="@idInstructor" />
+                        <input class="form-control" value="@ViewBag.search" type="search" name="search"
+                            placeholder="Search">
+                        <button class="btn btn-primary btn-outline-primary ml-2" type="submit">
+                            <i class='bx bx-search-alt-2'></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-6 float-right">
+                <a class="btn btn-success mb-2 float-right" href="@Url.Action("Create", "Lesson", 
+                new { chapterId = ViewBag.ChapterId, courseId = ViewBag.CourseId })">Add new Lesson</a>
+            </div>
+        </div>
+    </div>
+    <div class="container p-0 mt-3">
+        <table class="datatables-basic table mb-5">
+            <thead>
+                <tr>
+                    <th width="10"><input type="checkbox" id="all" class="checkbox-item"></th>
+                    <th width="200" class="text-theme">Lesson Name</th>
+                    <th width="200" class="text-theme">Description</th>
+                    <th width="150" class="text-theme">Percent To Passed</th>
+                    <th width="70" class="text-theme">Index</th>
+                    <th width="100" class="text-theme">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @if (Model != null)
+                {
+                    foreach (var lesson in Model)
+                    {
+                        <tr>
+                            <td class="dt-checkboxes-cell">
+                                <input type="checkbox">
+                            </td>
+                            <td>@lesson.LessonName</td>
+                            <td>@lesson.Description</td>
+                            <td class="text-center">@lesson.PercentToPassed</td>
+                            <td class="text-center">@lesson.Index</td>
+                            <td class="text-theme">
+                                <div class="action-icon d-flex text-center">
+                                    <a class="btn btn-warning mr-2"
+                                        href="@Url.Action("Edit", "Lesson", new {id = @lesson.LessonId})" title="Edit">
+                                        <i class='bx bxs-edit'></i>
+                                    </a>
+                                    <a class="btn btn-danger"  href="@Url.Action("Delete", "Lesson", new {id = @lesson.LessonId})"
+                                        title="Delete">
+                                        <i class='bx bxs-trash-alt'></i>
+                                    </a>
+                                </div>
+                            </td>
+                        </tr>
+                    }
+                }
+                else
+                {
+                    <tr>
+                        <td colspan="11">No lessons found.</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

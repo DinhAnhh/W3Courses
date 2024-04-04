@@ -1,0 +1,31 @@
+@model IEnumerable<WebLibrary.Models.Answer>
+@{
+    ViewBag.Title = "Answer";
+   Layout = "~/Views/Shared/_LayoutCourse.cshtml";
+}
+<link rel="stylesheet" href="~/css/site.css" />
+<link rel="stylesheet" href="~/fonts/boxicons.css" />
+
+<a href="@Url.Action("Create", "Answer", new { courseId = ViewBag.CourseId })" class="btn btn-secondary">Add Answer</a>
+<a href="@Url.Action("Index", "Chapter", new { courseId = ViewBag.CourseId })" class="btn btn-secondary">Back</a>
+<table class="table table-hover">
+    <thead>
+        <tr class="bg-dark text-white">
+            <th>ID</th>
+            <th>Answer</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var answer in Model)
+        {
+            <tr>
+                <td>@answer.AnswerId</td>
+                <td>@answer.Answer1</td>
+                <td>
+                    <a class="btn btn-danger" asp-action="Delete" asp-route-id="@answer.AnswerId" asp-route-courseId="@ViewBag.CourseId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

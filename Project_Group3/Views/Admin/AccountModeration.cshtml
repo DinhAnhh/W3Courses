@@ -1,0 +1,97 @@
+@model Project_Group3.Models.ModelsView
+@{
+    ViewBag.Title = "Edit Instructor";
+
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container-fluid mt-2 mb-3 p-0">
+    <div class="card mb-4 bg-theme">
+        <form asp-action="AccountModeration" class="mb-4">
+            <div class="card-body d-flex" style="justify-content: space-between;">
+                <div class="d-flex align-items-start align-items-sm-center gap-4 ml-5">
+                    <div class=" mr-2 mt-5">
+                        <img class="avatar-initial rounded-circle bg-label-warning" src="~/img/1.png"
+                            style="width: 80%;">
+                    </div>
+                    <div class="id-text form-group">
+                        <label class="text-theme font-weight-bold">InstructorId</label>
+                        <input asp-for="@Model.Instructor.InstructorId" class="form-control" style="width: 80%;" readonly />
+                    </div>
+                </div>
+            </div>
+            <div class="container-fluid ml-5">
+                <div class="row">
+                    <input type="hidden" asp-for="@Model.Instructor.InstructorId" />
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label class="text-theme font-weight-bold">FirstName</label>
+                            <input asp-for="@Model.Instructor.FirstName" class="form-control" style="width: 80%;" readonly />
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label class="text-theme font-weight-bold">LastName</label>
+                            <input asp-for="@Model.Instructor.LastName" class="form-control" style="width: 80%;" readonly />
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label class="text-theme font-weight-bold">Gender</label>
+                            <input asp-for="@Model.Instructor.Gender" class="form-control" style="width: 80%;" readonly />
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label class="text-theme font-weight-bold">Country</label>
+                            <input asp-for="@Model.Instructor.Country" class="form-control" style="width: 80%;" readonly />
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label class="text-theme font-weight-bold">Email</label>
+                            <input asp-for="@Model.Instructor.Email" class="form-control" style="width: 80%;" readonly />
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label class="text-theme font-weight-bold">PhoneNumber</label>
+                            <input asp-for="@Model.Instructor.PhoneNumber" class="form-control" style="width: 80%;" readonly />
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label class="text-theme font-weight-bold">Birthday</label>
+                            <input asp-for="@Model.Instructor.Birthday" class="form-control" style="width: 80%;" readonly />
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label class="text-theme font-weight-bold">Registration Date</label>
+                            <input asp-for="@Model.Instructor.RegistrationDate" class="form-control" style="width: 80%;" readonly />
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label class="text-theme font-weight-bold">Introduce</label>
+                            <textarea asp-for="@Model.Instructor.Introduce" class="form-control" style="width: 80%;" rows="4"
+                                readonly></textarea>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label class="text-theme font-weight-bold">Status</label>
+                            <input asp-for="@Model.Instructor.Status" class="form-control" style="width: 80%;" readonly />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success ml-5">Accept</button>
+            <a href="@Url.Action("Instructor", "Admin")" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

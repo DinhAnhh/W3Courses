@@ -1,0 +1,82 @@
+@model Project_Group3.Models.ModelsView
+@{
+    ViewData["Title"] = "Course Management | Lesson";
+    Layout = "~/Views/Shared/_LayoutCourse.cshtml";
+}
+<link rel="stylesheet" href="~/css/site.css" />
+<link rel="stylesheet" href="~/fonts/boxicons.css" />
+
+<div class="container-fluid mt-2 mb-3 p-0">
+    <div class="card mb-4 bg-theme">
+        <form asp-action="Edit" class="ml-5 mt-3 mb-3" enctype="multipart/form-data">
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="form-group">
+                        <input type="hidden" asp-for="@Model.Quiz.QuizId">
+                        <input type="hidden" asp-for="@Model.Quiz.CourseId">
+                        <input type="hidden" asp-for="@Model.Quiz.ChapterId">
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="@Model.Quiz.Quiz1" class="text-theme font-weight-bold"></label>
+                            <input asp-for="@Model.Quiz.Quiz1" class="form-control" style="width: 80%;" />
+                            <span asp-validation-for="@Model.Quiz.Quiz1" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="@Model.Quiz.DapAnA" class="text-theme font-weight-bold"></label>
+                            <input asp-for="@Model.Quiz.DapAnA" class="form-control" style="width: 80%;" />
+                            <span asp-validation-for="@Model.Quiz.DapAnA" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label asp-for="@Model.Quiz.DapAnB" class="text-theme font-weight-bold"></label>
+                        <input asp-for="@Model.Quiz.DapAnB" class="form-control" style="width: 80%;" />
+                        <span asp-validation-for="@Model.Quiz.DapAnB" class="text-danger"></span>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="@Model.Quiz.DapAnC" class="text-theme font-weight-bold"></label>
+                            <input asp-for="@Model.Quiz.DapAnC" class="form-control" style="width: 80%;" />
+                            <span asp-validation-for="@Model.Quiz.DapAnC" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="@Model.Quiz.DapAnD" class="text-theme font-weight-bold"></label>
+                            <input asp-for="@Model.Quiz.DapAnD" class="form-control" style="width: 80%;" />
+                            <span asp-validation-for="@Model.Quiz.DapAnD" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label asp-for="@Model.Quiz.AnswerId" class="text-theme font-weight-bold"></label>
+                        <select asp-for="@Model.Quiz.AnswerId" asp-items="@ViewBag.AnswerList" class="form-control"
+                            required>
+                            <option value="">-- Select Category --</option>
+                        </select>
+                        <span asp-validation-for="@Model.Quiz.AnswerId" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-success mr-3">Update</button>
+                <a href="@Url.Action("Index", "Quiz", new {courseId = @Model.Quiz.CourseId, chapterId =@Model.Quiz.ChapterId})"
+                    class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+
+@{
+    var errorMessage = ViewBag.Message as string;
+}
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-danger">@errorMessage</div>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

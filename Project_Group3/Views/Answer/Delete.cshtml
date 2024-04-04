@@ -1,0 +1,31 @@
+@model WebLibrary.Models.Answer
+@{
+    ViewData["Title"] = "Edit";
+  Layout = "~/Views/Shared/_LayoutCourse.cshtml";
+}
+<link rel="stylesheet" href="~/css/site.css" />
+<link rel="stylesheet" href="~/fonts/boxicons.css" />
+<form asp-action="Delete" asp-route-courseId="@ViewBag.CourseId">
+    <input asp-for="AnswerId" type="hidden" class="form-control" style="width: 25%;" />
+    <div class="form-group">
+        <label asp-for="Answer1" class="font-weight-bold"></label>
+        <input asp-for="Answer1" class="form-control" style="width: 25%;" readonly/>
+        <span asp-validation-for="Answer1" class="text-danger"></span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Delete</button>
+     <a href="@Url.Action("Index", "Answer", new { courseId = ViewBag.CourseId })" class="btn btn-secondary">Back</a>
+</form>
+
+@{
+    var errorMessage = ViewBag.Message as string;
+}
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-danger">@errorMessage</div>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

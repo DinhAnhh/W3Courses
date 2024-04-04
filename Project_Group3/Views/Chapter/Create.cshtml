@@ -1,0 +1,68 @@
+@model WebLibrary.Models.Chapter;
+
+@{
+    ViewData["Title"] = "Create Chapter";
+    Layout = "~/Views/Shared/_LayoutCourse.cshtml";
+}
+<link rel="stylesheet" href="~/css/site.css" />
+<link rel="stylesheet" href="~/fonts/boxicons.css" />
+@{
+    var idInstructor = int.Parse(Context.Request.Cookies["ID"]);
+}
+<div class="container-fluid mt-2 mb-3 p-0">
+    @* <H1>Chapter for @ViewBag.CourseName</H1> *@
+    <div class="card mb-4 bg-theme">
+        <form asp-action="Create" class="ml-5 mt-3 mb-3">
+            <div class="container-fluid">
+                <div class="row mt-5">
+                    <input asp-for="CourseId" type="hidden" value="@ViewBag.CourseId" class="form-control" style="width: 80%;" />
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="ChapterName" class="text-theme font-weight-bold"></label>
+                            <input asp-for="ChapterName" class="form-control" style="width: 80%;" required />
+                            <span asp-validation-for="ChapterName" class="text-danger"></span>
+                        </div>
+                    </div>
+                     <div class="mb-3 col-md-6">
+                        @if (ViewBag.ExistingChapterIndexes != null && ViewBag.ExistingChapterIndexes.Count > 0)
+                        {
+                            <div class="form-group">
+                                <label class="text-theme font-weight-bold">Existing Chapter Indexes:</label>
+                                <ul class="list-group">
+                                    @foreach (var index in ViewBag.ExistingChapterIndexes)
+                                    {
+                                     <li class="list-group-item text-dark">@index</li>
+                                    }
+                                </ul>
+                            </div>
+                        }
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Description" class="text-theme font-weight-bold"></label>
+                            <textarea asp-for="Description" class="form-control" style="width: 80%;" required></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Index" class="text-theme font-weight-bold"></label>
+                            <input asp-for="Index" class="form-control" style="width: 80%;" required />
+                            <span asp-validation-for="Index" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-12">
+                        <button type="submit" class="btn btn-success">Create Chapter</button>
+                        <button type="submit" class="btn btn-primary" name="redirectToCreateLesson" value="true">Add and Create Lesson</button>
+                        <a href="@Url.Action("Index", "Chapter", new {courseId = @ViewBag.CourseId})" class="btn btn-secondary">Cancel</a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

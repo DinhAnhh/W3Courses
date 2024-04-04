@@ -1,0 +1,43 @@
+@model WebLibrary.Models.Voucher
+@{
+    ViewData["Title"] = "Delete Voucher";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/fonts/boxicons.css" />
+<div class="card bg-theme p-0 mt-2 mb-5">
+    <div class="container my-3">
+        <form asp-action="DeleteConfirmed" class="ml-5 mt-3 mb-3">
+            <input asp-for="VoucherId" type="hidden" class="form-control">
+            <div class="mb-3 text-theme">
+                <label asp-for="PercentDiscount" class="form-label">Percentage Discount</label>
+                <input asp-for="PercentDiscount" type="number" class="form-control" readonly>
+                <span asp-validation-for="PercentDiscount" class="text-danger"></span>
+            </div>
+            <div class="mb-3 text-theme">
+                <label asp-for="StartAt" class="form-label">Start Date</label>
+                <input asp-for="StartAt" type="datetime-local" class="form-control" readonly>
+                <span asp-validation-for="StartAt" class="text-danger"></span>
+            </div>
+            <div class="mb-3 text-theme">
+                <label asp-for="EndAt" class="form-label">End Date</label>
+                <input asp-for="EndAt" type="datetime-local" class="form-control" readonly>
+                <span asp-validation-for="EndAt" class="text-danger"></span>
+            </div>
+            <div class="mb-3 text-theme form-check" style="width: 20%; margin-left: -1rem;">
+                <label asp-for="IsActive" class="form-check-label font-weight-bold mr-4">Active</label>
+                <input type="text" class="form-control" asp-for="IsActive"readonly>
+                <span asp-validation-for="IsActive" class="text-danger"></span>
+            </div>
+
+            <p class="text-danger">@ViewBag.err</p>
+            <button type="submit" class="btn btn-danger">Delete</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+
+@if (!string.IsNullOrEmpty(ViewBag.Message))
+{
+    <div class="alert alert-danger">@ViewBag.Message</div>
+}

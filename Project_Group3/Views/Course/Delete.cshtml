@@ -1,0 +1,112 @@
+@model Project_Group3.Models.ModelsView
+@{
+   Layout = "~/Views/Shared/_LayoutCourse.cshtml";
+}
+<link rel="stylesheet" href="~/css/site.css" />
+<link rel="stylesheet" href="~/fonts/boxicons.css" />
+@{
+    var idInstructor = Context.Request.Cookies["ID"];
+    if (idInstructor != null)
+    {
+         var idInstructorInt = int.Parse(idInstructor);
+    }
+}
+
+<link rel="stylesheet" href="~/css/site.css" />
+<link rel="stylesheet" href="~/fonts/boxicons.css" />
+
+<div class="container-fluid mt-2 mb-3 p-0">
+    <div class="card mb-4 bg-theme">
+        <form asp-action="Delete" class="ml-5 mt-3 mb-3" enctype="multipart/form-data">
+
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="mb-3 col-md-6">
+                        <div class="mb-3 col-md-6">
+                            <div class="form-group">
+                                <input type="hidden" asp-for="@Model.Course.CourseId" readonly>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.Course.CategoryId" class="text-theme font-weight-bold"></label>
+                            <select asp-for="@Model.Course.CategoryId" asp-items="@ViewBag.CategoryList"
+                                class="form-control" readonly>
+                                <option value="">-- Select Category --</option>
+                            </select>
+                            <span asp-validation-for="@Model.Course.CategoryId" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="@Model.Course.CourseName" class="text-theme font-weight-bold"></label>
+                            <input asp-for="@Model.Course.CourseName" class="form-control" readonly />
+                            <span asp-validation-for="@Model.Course.CourseName" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="@Model.Course.Description" class="text-theme font-weight-bold"></label>
+                            <input asp-for="@Model.Course.Description" class="form-control" readonly />
+                            <span asp-validation-for="@Model.Course.Description" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="@Model.Course.Picture" class="text-theme font-weight-bold"></label>
+                            <input asp-for="@Model.Course.Picture" name="picture" type="file" class="form-control" readonly />
+                            <span asp-validation-for="@Model.Course.Picture" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="@Model.Course.TotalTime" class="text-theme font-weight-bold"></label>
+                            <input asp-for="@Model.Course.TotalTime" class="form-control" readonly />
+                            <span asp-validation-for="@Model.Course.TotalTime" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="@Model.Course.Price" class="text-theme font-weight-bold"></label>
+                            <input asp-for="@Model.Course.Price" class="form-control"  />
+                            <span class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="@Model.Course.Status" class="text-theme font-weight-bold"></label>
+                            <select asp-for="@Model.Course.Status" class="form-control" readonly>
+                                <option value="">Please select...</option>
+                                <option value="Active">Active</option>
+                                <option value="Inactive">Inactive</option>
+                            </select>
+                            <span asp-validation-for="@Model.Course.Status" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="@Model.Course.CreationDate" class="text-theme font-weight-bold"></label>
+                            <input asp-for="@Model.Course.CreationDate" class="form-control" readonly />
+                            <span asp-validation-for="@Model.Course.CreationDate" class="text-danger"></span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-success mr-3">Delete</button>
+            <a href="@Url.Action("Index", "Course", new {id = idInstructor})" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+
+@{
+    var errorMessage = ViewBag.Message as string;
+}
+
+@if (!string.IsNullOrEmpty(errorMessage))
+{
+    <div class="alert alert-danger">@errorMessage</div>
+}
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

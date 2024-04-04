@@ -1,0 +1,55 @@
+@model List<WebLibrary.Models.Voucher>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<link rel="stylesheet" href="~/fonts/boxicons.css" />
+
+@if (TempData["EditSuccess"] != null)
+{
+    <div id="editAlert"
+        class="alert alert-@((bool)TempData["EditSuccess"] ? "success" : "danger") alert-dismissible fade show">
+        @((bool)TempData["EditSuccess"] ? "Instructor edited successfully." : "Failed to edit instructor.")
+        <div id="progressBar"></div>
+    </div>
+}
+
+@if (TempData["DeleteSuccess"] != null)
+{
+    <div id="deleteAlert"
+        class="alert alert-@((bool)TempData["DeleteSuccess"] ? "success" : "danger") alert-dismissible fade show">
+        @((bool)TempData["DeleteSuccess"] ? "Instructor deleted successfully." : "Failed to delete instructor.")
+        <div id="progressBar"></div>
+    </div>
+}
+<div class="card bg-theme p-0 mt-2 mb-5">
+    <div class="container my-3">
+        <a class="btn btn-success my-2" asp-action="Create">Create</a>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Code Voucher</th>
+                    <th>Percent Discount</th>
+                    <th>Start At</th>
+                    <th>End At</th>
+                    <th>Is Active</th>
+                    <th></th>
+                </tr>
+            </thead>
+            <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.CodeVoucher</td>
+                    <td>@item.PercentDiscount</td>
+                    <td>@item.StartAt</td>
+                    <td>@item.EndAt</td>
+                    <td>@item.IsActive</td>
+                    <td><a href="@Url.Action("Delete", "Voucher", new{id = @item.VoucherId})" class="btn btn-danger">Delete</a></td>
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

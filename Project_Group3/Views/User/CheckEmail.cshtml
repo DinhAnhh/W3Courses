@@ -1,0 +1,37 @@
+@model Project_Group3.Controllers.UserController
+@{
+    ViewData["Title"] = "Forgot Password";
+    Layout = "~/Views/Shared/_Login.cshtml";
+}
+<link rel="stylesheet" href="~/css/site.css" />
+<link rel="stylesheet" href="~/css/checkemail.css">
+<link href="~/lib/bootstrap/dist/css/bootstrap.css" rel="stylesheet">
+
+<div class="container-xxl">
+    <div class="row justify-content-center align-items-center vh-100">
+        <div class="col-lg-4 col-md-6">
+            <div class="card mt-5">
+                <div class="card-body">
+                <!-- Logo -->
+                    <div class="text-center mb-4">
+                        <h4 class="mb-2">Forgot Password? 🔒</h4>
+                    </div>
+                    <p class="text-center mb-4">Enter your email and we'll send you instructions to reset your password</p>
+                    <form asp-action="CheckEmail">
+                        <div class="mb-3">
+                            <label for="email" class="form-label">Email Address</label>
+                            <input name="email" class="form-control" type="email" placeholder="Enter your email address" required autofocus>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Send Reset Link</button>
+                    </form>
+                    <div class="text-center mt-3">
+                        <a href="@Url.Action("Login", "User")" class="text-decoration-none">
+                            <i class="bx bx-chevron-left bx-sm align-middle"></i>
+                            Back to login
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

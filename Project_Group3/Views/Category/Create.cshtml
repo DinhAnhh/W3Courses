@@ -1,0 +1,37 @@
+@model WebLibrary.Models.Category;
+
+@{
+    ViewData["Title"] = "Create Category";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<link rel="stylesheet" href="~/css/style.css" />
+<link rel="stylesheet" href="~/fonts/boxicons.css" />
+
+<div class="container-fluid mt-2 mb-3 p-0">
+    <div class="card mb-4 bg-theme">
+        <form asp-action="Create" class="ml-5 mt-3 mb-3">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="CategoryName" class="text-theme font-weight-bold"></label>
+                            <input asp-for="CategoryName" class="form-control" style="width: 80%;" />
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Description" class="text-theme font-weight-bold"></label>
+                            <input asp-for="Description" class="form-control" style="width: 80%;" />
+                        </div>
+                    </div>    
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success mr-3">Create</button>
+            <a asp-action="Index" class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,81 @@
+@model Project_Group3.Models.AnswerViewModels
+
+@{
+    ViewBag.Title = "QuizTest";
+  Layout = "~/Views/Shared/_LayoutHome.cshtml";
+}
+<link rel="stylesheet" href="~/css/site.css" />
+<link rel="stylesheet" href="~/fonts/boxicons.css" />
+
+<div class="container-fluid addvertising-course">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+     <a class="" href="@Url.Action("Learning", "Home", new { courseId = Model.Course.CourseId, chapterId = Model.Chapter.ChapterId, lessonId = ViewBag.LessonId })">
+   <i class="fas fa-arrow-left"></i> Back to Lesson
+</a>
+
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="mb-0">Quiz</h4>
+                </div>
+                <div class="card-body">
+                    <p>Correct Answers: @ViewBag.correctCount / Total Questions: @ViewBag.totalCount</p>
+                    <form asp-controller="Quiz" asp-action="Test" asp-route-chapterId="@Model.Chapter.ChapterId"
+                        asp-route-courseId="@Model.Course.CourseId" asp-route-lessonId=@ViewBag.LessonId  asp-route-numberOfQuestions="@Model.Quiz.Count"
+                        method="post">
+                   
+                        <div class="form-group">
+                            <label for="CourseName">Course Name:</label>
+                            <input type="text" class="form-control" asp-for="@Model.Course.CourseName" readonly>
+                            <input type="hidden" class="form-control" asp-for="@Model.Course.CourseId" readonly>
+                        </div>
+                        <div class="form-group">
+                            <label for="ChapterName">Chapter Name:</label>
+                            <input type="text" class="form-control" asp-for="@Model.Chapter.ChapterName" readonly>
+                            <input type="hidden" class="form-control" asp-for="@Model.Chapter.ChapterId" readonly>
+                        </div>
+                        <div>
+                            @for (int i = 0; i < Model.Quiz.Count; i++)
+                            {
+                                <div class="card mb-3">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Question @(i + 1):</h5>
+                                        <p class="card-text">@Model.Quiz[i].Quiz1</p>
+                                       @foreach (var answer in Model.AnswerList)
+{
+    <div class="form-check">
+        @if (Model.UserCanSelectAnswer)
+        {
+            <input type="radio" class="form-check-input" asp-for="@Model.Quiz[i].AnswerId" value="@answer.AnswerId" />
+        }
+        else
+        {
+            <input type="radio" class="form-check-input" asp-for="@Model.Quiz[i].AnswerId" value="@answer.AnswerId" disabled />
+        }
+        <label class="form-check-label">@answer.Answer1</label>
+    </div>
+}
+                                        <input type="hidden" asp-for="@Model.Quiz[i].QuizId">
+                                    </div>
+                                </div>
+                            }
+                        </div>
+                        <input type="hidden" name="chapterId" value="@Model.Chapter.ChapterId" />
+                        <input type="hidden" name="courseId" value="@Model.Course.CourseId" />
+                          <input type="hidden" name="LessonId" value="@ViewBag.LessonId" />
+                        <input type="hidden" name="numberOfQuestions" value="@Model.Quiz.Count" />
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/js/all.min.js"></script>
+
+<style>
+    .text-theme {
+        color: #333;
+    }
+</style>

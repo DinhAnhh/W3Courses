@@ -1,0 +1,55 @@
+    @model Project_Group3.Models.PaymentViewModel
+    @{
+        ViewData["Title"] = "Payment";
+        Layout = "~/Views/Shared/_LayoutHome.cshtml";
+    }
+    <link rel="stylesheet" href="~/css/style.css" />
+    <link rel="stylesheet" href="~/fonts/boxicons.css" />
+
+
+    <div class="container py-5 section-py bg-body first-section-pt">
+        <h1 class="mb-4 text-center text-primary">Payment</h1>
+        <div class="card px-3">
+            <form asp-action="CheckOut" method="POST">
+                <div class="row mt-5 mb-5">
+                    <div class="col-md-6 col-lg-6" style="border-right: 1px solid #000000;">
+                        <h4 class="mb-2">Here is your information</h4>
+                        <div class="row g-3">
+                            <div class="col-md-6">
+                                <label class="mr-2">Name: </label>
+                                <input asp-for="@Model.learnerName"  readonly></input>
+                            </div>
+                        </div>
+                        
+                    </div>
+                    <div class="col-md-6 col-lg-6">
+                        <h4 class="mb-2">Course information</h4>
+                        <div class="row g-3">
+                        
+                            <div class="col-md-12 mb-4">
+                                <label>Course Name:</label>
+                                <input style="width: 100%;" asp-for="@Model.courseName"  readonly></input>
+                            </div>
+                            <div class="col-md-12 mb-4">
+                                <label>Price:</label>
+                                <input style="width: 100%;" asp-for="@Model.Price"  readonly></input>
+                            </div>
+                            <div class="col-md-12 mb-4">
+                                <label>Voucher (if available):</label>
+                                <input style="width: 100%;" asp-for="@Model.voucher" ></input>
+                            </div>
+                             <div class="col-md-12 mb-4">
+                                <input style="width: 100%;" asp-for="@Model.LeanrerId" hidden ></input>
+                            </div>
+                        </div>
+                        <div class="d-grid mt-3">
+                            <button type="submit" class="btn btn-success float-right">
+                                <span class="me-2">Proceed with Payment</span>
+                                <i class="bx bx-right-arrow-alt scaleX-n1-rtl"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>

@@ -1,0 +1,78 @@
+@model WebLibrary.Models.Quiz
+@{
+    ViewData["Title"] = "Create Quiz";
+  Layout = "~/Views/Shared/_LayoutCourse.cshtml";
+}
+<link rel="stylesheet" href="~/css/site.css" />
+<link rel="stylesheet" href="~/fonts/boxicons.css" />
+<h1>@ViewBag.err</h1>
+<h3>Create Quiz for Course: @ViewBag.CourseName and Chapter: @ViewBag.ChapterName </h3>
+<div class="container-fluid mt-2 mb-3 p-0">
+    <div class="card mb-4 bg-theme">
+        <form asp-action="Create" class="ml-5 mt-3 mb-3">
+            <div class="container-fluid">
+                <div class="row">
+                    <input asp-for="ChapterId" type="hidden" value="@ViewBag.ChapterId" class="form-control"
+                        style="width: 80%;" />
+                    <input asp-for="CourseId" type="hidden" value="@ViewBag.CourseId" class="form-control"
+                        style="width: 80%;" />
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="Quiz1" class="text-theme font-weight-bold"></label>
+                            <input asp-for="Quiz1" class="form-control" style="width: 80%;" required />
+                            <span asp-validation-for="Quiz1" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="DapAnA" class="text-theme font-weight-bold"></label>
+                            <input asp-for="DapAnA" class="form-control" style="width: 80%;" required />
+                            <span asp-validation-for="DapAnA" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="DapAnB" class="text-theme font-weight-bold"></label>
+                            <input asp-for="DapAnB" class="form-control" style="width: 80%;" required />
+                            <span asp-validation-for="DapAnB" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="DapAnC" class="text-theme font-weight-bold"></label>
+                            <input asp-for="DapAnC" class="form-control" style="width: 80%;" required />
+                            <span asp-validation-for="DapAnC" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <div class="form-group">
+                            <label asp-for="DapAnD" class="text-theme font-weight-bold"></label>
+                            <input asp-for="DapAnD" class="form-control" style="width: 80%;" required />
+                            <span asp-validation-for="DapAnD" class="text-danger"></span>
+                        </div>
+                    </div>
+                    <div class="mb-3 col-md-6">
+                        <label class="font-weight">DapAn</label>
+                        <select class="form-control" name="AnswerId" id="AnswerId" required>
+                            <option value="">Please select...</option>
+                            @{
+                                foreach (var answer in ViewBag.Answers)
+                                {
+                                    <option value="@answer.AnswerId">@answer.Answer1</option>
+                                }
+                            }
+                        </select>
+                        <span asp-validation-for="Answer.AnswerId" class="text-danger"></span>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-success mr-3">Create</button>
+            <a asp-action="Index" asp-route-chapterId="@ViewBag.ChapterId" asp-route-courseId="@ViewBag.CourseId"
+                class="btn btn-secondary">Cancel</a>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

@@ -1,0 +1,81 @@
+@model Tuple<IEnumerable<WebLibrary.Models.Quiz>, IEnumerable<WebLibrary.Models.Answer>, WebLibrary.Models.Chapter,
+WebLibrary.Models.Course>
+
+@{
+    ViewData["Title"] = "Index";
+   Layout = "~/Views/Shared/_LayoutCourse.cshtml";
+}
+<link rel="stylesheet" href="~/css/site.css" />
+<link rel="stylesheet" href="~/fonts/boxicons.css" />
+
+
+<h1>List Quiz</h1>
+<a class="btn btn-success mb-2"
+    href="@Url.Action("Create", "Quiz", new { chapterId = @Model.Item3.ChapterId, courseId = @Model.Item4.CourseId})">Add
+    Quiz</a>
+<a class="btn btn-success mb-2" href="@Url.Action("Index", "Chapter", new { courseId = @Model.Item4.CourseId})">Back to
+    Chapter</a>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>CourseName</th>
+            <th>ChapterName</th>
+            <th>Quiz1</th>
+            <th>DapAnA</th>
+            <th>DapAnB</th>
+            <th>DapAnC</th>
+            <th>DapAnD</th>
+            <th>DapAn</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null)
+        {
+            foreach (var quiz in Model.Item1)
+            {
+                <tr>
+                    <td>@Model.Item4.CourseName</td>
+                    <td>@Model.Item3.ChapterName</td>
+                    <td>@quiz.Quiz1</td>
+                    <td>@quiz.DapAnA</td>
+                    <td>@quiz.DapAnB</td>
+                    <td>@quiz.DapAnC</td>
+                    <td>@quiz.DapAnD</td>
+                    @{
+                        string answerName = "";
+                        foreach (var answer in Model.Item2)
+                        {
+                            if (quiz.AnswerId == answer.AnswerId)
+                            {
+                                <td>@answer.Answer1</td>
+                            }
+                        }
+                    }
+                    <td class="text-theme">
+                        <div class="action-icon d-flex text-center">
+                            <a class="btn btn-warning mr-2" href="@Url.Action("Edit", "Quiz", new {id = @quiz.QuizId})"
+                                title="Edit">
+                                <i class='bx bxs-edit'></i>
+                            </a>
+                            <a class="btn btn-danger" href="@Url.Action("Delete", "Quiz", new {id = @quiz.QuizId})"
+                                title="Delete">
+                                <i class='bx bxs-trash-alt'></i>
+                            </a>
+                        </div>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="8">No Quiz found.</td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
